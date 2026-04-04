@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="hero">
+        <h1>AUCA Marketplace</h1>
+        <p class="hero-sub">Buy, sell and exchange goods with other AUCA students —
+            textbooks, electronics, dorm items and more. Secure, simple, and centered on campus life.</p>
+        {% if current_user.is_authenticated %}
+            <a class="cta" href="{{ url_for('items') }}">Go to Marketplace</a>
+        {% else %}
+            <a class="cta" href="{{ url_for('login') }}">Login to Start</a>
+        {% endif %}
+    </div>
+
+    <section class="features-section">
+    <div class="section-title">
+        <h2>Why Use AUCA Marketplace?</h2>
+        <p>Tailored specifically for our campus community.</p>
+    </div>
+
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="icon">📚</div>
+            <h3>Student-to-Student</h3>
+            <p>Buy your textbooks, lab gear, and dorm essentials directly from peers who don't need them anymore.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="icon">🔒</div>
+            <h3>Verified AUCA Emails</h3>
+            <p>Only users with a valid @auca.kg or @alumni.auca.kg address can post, ensuring a safer trading environment.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="icon">🤝</div>
+            <h3>Easy Exchange</h3>
+            <p>Skip the shipping costs. Meet up right on campus—the Bravo area, the Library, or the Cafeteria.</p>
+        </div>
+    </div>
+</section>
+
+<section class="info-section">
+    <div class="info-container">
+        <div class="info-text">
+            <h2>Supporting Our Community</h2>
+            <p>AUCA Marketplace was built to promote sustainability on campus. By recycling items within our community, we reduce waste and help students save money for what matters most—their education.</p>
+            <ul class="info-list">
+                <li>✅ Zero listing fees for students</li>
+                <li>✅ Secure login via AUCA credentials</li>
+                <li>✅ Real-time item updates</li>
+            </ul>
+        </div>
+        <div class="info-image">
+            <img src="{{ url_for('static', filename='/images/AUCA-Campus.png') }}" alt="AUCA Campus Building">
+        </div>
+    </div>
+</section>
+
+{% endblock %}

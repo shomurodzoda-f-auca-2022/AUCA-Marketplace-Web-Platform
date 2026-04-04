@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Marketplace Items</h2>
+
+<div class="item-list">
+{% for item in items %}
+<a href="{{ url_for('item_detail', item_id=item.id) }}" class="item-link">
+    <div class="item-card">
+
+        {% if item.image_filename %}
+        <img src="{{ url_for('uploaded_file', filename=item.image_filename) }}">
+        {% else %}
+        <img src="{{ url_for('static', filename='images/no-image.png') }}">
+        {% endif %}
+
+        <h3>{{ item.title }}</h3>
+        <p class="price">{{ item.price }} KGS</p>
+
+    </div>
+</a>
+{% endfor %}
+</div>
+
+{% endblock %}

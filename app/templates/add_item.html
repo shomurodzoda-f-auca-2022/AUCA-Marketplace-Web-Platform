@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="centered-form-wrapper">
+    <form method="POST" enctype="multipart/form-data">
+        <h2>Add New Item</h2>
+        <input type="text" name="title" placeholder="Title" required>
+        <textarea name="description" placeholder="Description"></textarea>
+        <input type="number" name="quantity" min="1" placeholder="Quantity" required>
+        <input type="number" step="0.01" name="price" placeholder="Price (Som)" required>
+        <input type="text" name="contact_info" placeholder="Contact info (Telegram/WhatsApp)" required>
+        <label for="image" class="small-label">Upload image (optional)</label>
+        <input type="file" name="image" accept="image/*">
+        <button type="submit">Add Item</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="marketplace-header">
+    <h2>My Favourites</h2>
+    <span class="item-count">{{ items|length }} saved</span>
+</div>
+
+<div class="item-list">
+    {% for item in items %}
+    <div class="item-card">
+        <a href="{{ url_for('item_detail', item_id=item.id) }}" class="item-link">
+            <div class="item-card-img-wrap">
+                {% if item.image_filename %}
+                    <img src="{{ url_for('uploaded_file', filename=item.image_filename) }}" alt="{{ item.title }}">
+                {% else %}
+                    <img src="{{ url_for('static', filename='images/no-image.png') }}" alt="No image">
+                {% endif %}
+            </div>
+            <div class="item-card-body">
+                <h3>{{ item.title }}</h3>
+                <p class="price">{{ item.price }}<span class="price-unit">KGS</span></p>
+            </div>
+        </a>
+
+        <button
+            class="heart-btn active"
+            data-item-id="{{ item.id }}"
+            title="Remove from favourites">
+            ❤️
+        </button>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <div class="empty-icon">🤍</div>
+        <h3>No favourites yet</h3>
+        <p>Hit the heart on any listing to save it here.</p>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+document.querySelectorAll('.heart-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+        const itemId = btn.dataset.itemId;
+        const res    = await fetch(`/toggle_favourite/${itemId}`, { method: 'POST' });
+        const data   = await res.json();
+        if (!data.is_fav) {
+            // Remove the card from the favourites page instantly
+            btn.closest('.item-card').remove();
+        }
+    });
+});
+</script>
+{% endblock %}

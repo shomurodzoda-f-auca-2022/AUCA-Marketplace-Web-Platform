@@ -1,24 +1,62 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Marketplace Items</h2>
+
+<div class="marketplace-header">
+    <h2>All Listings</h2>
+    <span class="item-count">{{ items|length }} item{% if items|length != 1 %}s{% endif %}</span>
+</div>
 
 <div class="item-list">
 {% for item in items %}
-<a href="{{ url_for('item_detail', item_id=item.id) }}" class="item-link">
     <div class="item-card">
+        <a href="{{ url_for('item_detail', item_id=item.id) }}" class="item-link">
+            {% if item.image_filename %}
+                <img src="{{ url_for('uploaded_file', filename=item.image_filename) }}">
+            {% else %}
+                <img src="{{ url_for('static', filename='images/no-image.png') }}">
+            {% endif %}
+            <h3>{{ item.title }}</h3>
+            <p class="price">{{ item.price }} KGS</p>
+        </a>
 
-        {% if item.image_filename %}
-        <img src="{{ url_for('uploaded_file', filename=item.image_filename) }}">
-        {% else %}
-        <img src="{{ url_for('static', filename='images/no-image.png') }}">
-        {% endif %}
-
-        <h3>{{ item.title }}</h3>
-        <p class="price">{{ item.price }} KGS</p>
-
+        <button
+            class="heart-btn {% if item.id in fav_ids %}active{% endif %}"
+            data-item-id="{{ item.id }}"
+            title="Save to favourites">
+            {% if item.id in fav_ids %}❤️{% else %}🤍{% endif %}
+        </button>
     </div>
-</a>
 {% endfor %}
 </div>
+
+<script>
+document.querySelectorAll('.heart-btn').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const itemId = btn.dataset.itemId;
+        const res  = await fetch(`/toggle_favorite/${itemId}`, { method: 'POST' });
+        const data = await res.json();
+
+        btn.textContent = data.is_fav ? '❤️' : '🤍';
+        btn.classList.toggle('active', data.is_fav);
+
+        showToast(data.is_fav ? 'Added to favourites ❤️' : 'Removed from favourites');
+    });
+});
+
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'fav-toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.classList.add('show'), 10);
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 2500);
+}
+</script>
 
 {% endblock %}

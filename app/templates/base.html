@@ -24,6 +24,7 @@
 
             {% if current_user.is_authenticated %}
                 <a href="{{ url_for('items') }}">Items</a>
+                <a href="{{ url_for('favourites') }}">Favorites</a>
                 <a href="{{ url_for('add_item') }}">Add Item</a>
             {% endif %}
 

@@ -40,6 +40,24 @@
                 </form>
             </div>
     {% endif %}
+    <button
+                    class="heart-btn heart-btn-lg {% if is_fav %}active{% endif %}"
+                    data-item-id="{{ item.id }}"
+                    title="Save to favourites">
+        {% if is_fav %}❤️{% else %}🤍{% endif %}
+    </button>
+
 
     </div>
+    <script>
+document.querySelectorAll('.heart-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+        const itemId = btn.dataset.itemId;
+        const res    = await fetch(`/toggle_favourite/${itemId}`, { method: 'POST' });
+        const data   = await res.json();
+        btn.textContent = data.is_fav ? '❤️' : '🤍';
+        btn.classList.toggle('active', data.is_fav);
+    });
+});
+</script>
 {% endblock %}

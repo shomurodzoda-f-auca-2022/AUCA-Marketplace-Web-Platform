@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, flash, send_from_directory
+from flask import Flask, render_template, redirect, url_for, request, flash, send_from_directory, jsonify
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from models import db, User, Item
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -96,7 +96,9 @@ def items():
     else:
         all_items = Item.query.order_by(Item.id.desc()).all()
 
-    return render_template('items.html', items=all_items)
+    fav_ids = {item.id for item in current_user.favourites}
+
+    return render_template('items.html', items=all_items, fav_ids=fav_ids)
 
 @app.route('/item/<int:item_id>')
 @login_required
@@ -187,6 +189,31 @@ def delete_item(item_id):
 
     flash("Item deleted successfully!", "success")
     return redirect(url_for('items'))
+
+
+# ── FAVOURITES ────────────────────────────────────────────────────────────────
+
+@app.route('/toggle_favourite/<int:item_id>', methods=['POST'])
+@login_required
+def toggle_favourite(item_id):
+    item = Item.query.get_or_404(item_id)
+    if current_user.favourites.filter_by(id=item_id).first():
+        current_user.favourites.remove(item)
+        is_fav = False
+    else:
+        current_user.favourites.append(item)
+        is_fav = True
+    db.session.commit()
+    # Returns JSON so the heart button can update without a page reload
+    return jsonify({'is_fav': is_fav})
+
+
+@app.route('/favourites')
+@login_required
+def favourites():
+    fav_items = current_user.favourites.all()
+    fav_ids = {item.id for item in fav_items}
+    return render_template('favorites.html', items=fav_items, fav_ids=fav_ids)
 
 # Run
 if __name__ == '__main__':

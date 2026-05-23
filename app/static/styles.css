@@ -525,3 +525,83 @@ form button:hover {
     color: #ff9f1c;
     padding: 15px;
 }
+
+/* ─── HEART / FAVOURITE BUTTON ──────────────────── */
+
+.item-card {
+    position: relative;
+}
+
+.heart-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    line-height: 1;
+    padding: 0;
+}
+
+.heart-btn:hover {
+    transform: scale(1.2);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+}
+
+.heart-btn.active {
+    background: #fff0f0;
+}
+
+.item-title-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.item-title-row h1 {
+    margin-bottom: 0;
+}
+
+.heart-btn-lg {
+    position: static;
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 4px;
+}
+/* ─── FAVOURITE TOAST ────────────────────────────── */
+
+.fav-toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #1a1612;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    z-index: 9999;
+    white-space: nowrap;
+}
+
+.fav-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}

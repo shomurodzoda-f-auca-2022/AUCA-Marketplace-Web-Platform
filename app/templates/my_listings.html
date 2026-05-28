@@ -22,6 +22,7 @@
             <a href="{{ url_for('item_detail', item_id=item.id) }}" class="my-listing-title">{{ item.title }}</a>
             <p class="my-listing-price">{{ item.price }} <span>KGS</span></p>
             <p class="my-listing-qty">Quantity: {{ item.quantity }}</p>
+            <p class="my-listing-qty">Posted {{ item.created_at | timeago }}</p>
         </div>
 
         <div class="my-listing-actions">

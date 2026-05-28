@@ -2,15 +2,35 @@
 {% block content %}
 <div class="centered-form-wrapper">
     <form method="POST" enctype="multipart/form-data">
-        <h2>Add New Item</h2>
-        <input type="text" name="title" placeholder="Title" required>
+        <h2>New listing</h2>
+        <p class="form-subtitle">Fill in the details for your item</p>
+        <input type="text" name="title" placeholder="Item title" required>
         <textarea name="description" placeholder="Describe your item — condition, details, etc."></textarea>
         <input type="number" name="quantity" min="1" placeholder="Quantity" required>
         <input type="number" step="0.01" name="price" placeholder="Price (Som)" required>
-        <input type="text" name="contact_info" placeholder="Contact info (Telegram/WhatsApp)" required>
-        <label for="image" class="small-label">Upload image (optional)</label>
-        <input type="file" name="image" accept="image/*">
-        <button type="submit">Add Item</button>
+        <input type="text" name="contact_info" placeholder="Telegram or WhatsApp handle" required>
+        <label class="small-label">Photos (up to 5)</label>
+        <input type="file" name="images" id="images" accept="image/*" multiple>
+        <div id="preview-container" class="preview-container"></div>
+        <button type="submit">Publish Listing</button>
     </form>
 </div>
+
+<script>
+    document.getElementById('images').addEventListener('change', function() {
+        const container = document.getElementById('preview-container');
+        container.innerHTML = '';
+        const files = Array.from(this.files).slice(0, 5);
+        files.forEach(file => {
+            const reader = new FileReader();
+            reader.onload = e => {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = 'preview-thumb';
+                container.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        });
+    });
+</script>
 {% endblock %}

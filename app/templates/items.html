@@ -18,45 +18,7 @@
             <h3>{{ item.title }}</h3>
             <p class="price">{{ item.price }} KGS</p>
         </a>
-
-        <button
-            class="heart-btn {% if item.id in fav_ids %}active{% endif %}"
-            data-item-id="{{ item.id }}"
-            title="Save to favourites">
-            {% if item.id in fav_ids %}❤️{% else %}🤍{% endif %}
-        </button>
     </div>
 {% endfor %}
 </div>
-
-<script>
-document.querySelectorAll('.heart-btn').forEach(btn => {
-    btn.addEventListener('click', async (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        const itemId = btn.dataset.itemId;
-        const res  = await fetch(`/toggle_favorite/${itemId}`, { method: 'POST' });
-        const data = await res.json();
-
-        btn.textContent = data.is_fav ? '❤️' : '🤍';
-        btn.classList.toggle('active', data.is_fav);
-
-        showToast(data.is_fav ? 'Added to favourites ❤️' : 'Removed from favourites');
-    });
-});
-
-function showToast(message) {
-    const toast = document.createElement('div');
-    toast.className = 'fav-toast';
-    toast.textContent = message;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.classList.add('show'), 10);
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => toast.remove(), 300);
-    }, 2500);
-}
-</script>
-
 {% endblock %}

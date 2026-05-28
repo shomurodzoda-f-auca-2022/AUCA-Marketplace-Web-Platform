@@ -50,14 +50,14 @@
 
     </div>
     <script>
-document.querySelectorAll('.heart-btn').forEach(btn => {
-    btn.addEventListener('click', async () => {
-        const itemId = btn.dataset.itemId;
-        const res    = await fetch(`/toggle_favourite/${itemId}`, { method: 'POST' });
-        const data   = await res.json();
-        btn.textContent = data.is_fav ? '❤️' : '🤍';
-        btn.classList.toggle('active', data.is_fav);
-    });
-});
-</script>
+        document.querySelectorAll('.heart-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const itemId = btn.dataset.itemId;
+                const res    = await fetch(`/toggle_favourite/${itemId}`, { method: 'POST' });
+                const data   = await res.json();
+                btn.textContent = data.is_fav ? '❤️' : '🤍';
+                btn.classList.toggle('active', data.is_fav);
+            });
+        });
+    </script>
 {% endblock %}

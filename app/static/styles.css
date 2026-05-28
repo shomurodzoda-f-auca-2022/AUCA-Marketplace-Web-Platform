@@ -605,3 +605,19 @@ form button:hover {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
 }
+
+.marketplace-header {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 56px 0;
+}
+
+.marketplace-header h2 {
+    font-size: 2.8rem;
+}
+
+.item-count {
+    font-size: 16px;
+}

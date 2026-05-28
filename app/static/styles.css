@@ -1,3 +1,25 @@
+:root {
+    --brand: #fb8500;
+    --brand-light: #ffb703;
+    --brand-dark: #d97000;
+    --surface: #ffffff;
+    --bg: #f7f5f2;
+    --bg-warm: #fdf8f2;
+    --text-primary: #1a1612;
+    --text-secondary: #6b6560;
+    --text-muted: #a09890;
+    --border: rgba(26,22,18,0.1);
+    --border-hover: rgba(26,22,18,0.2);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+    --radius-xl: 28px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
+    --shadow-lg: 0 12px 40px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.05);
+    --transition: 0.22s cubic-bezier(0.4,0,0.2,1);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -620,4 +642,126 @@ form button:hover {
 
 .item-count {
     font-size: 16px;
+}
+
+/* ─── MY LISTINGS PAGE ───────────────────────────── */
+
+.my-listings-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px 56px 56px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.my-listing-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.my-listing-row:hover {
+    border-color: var(--brand);
+    box-shadow: var(--shadow-md);
+}
+
+.my-listing-img-link img {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
+.my-listing-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.my-listing-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.my-listing-title:hover {
+    color: var(--brand);
+}
+
+.my-listing-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--brand);
+    margin-bottom: 2px;
+}
+
+.my-listing-price span {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+.my-listing-qty {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.my-listing-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.my-listing-actions form {
+    background: none;
+    padding: 0;
+    box-shadow: none;
+    border: none;
+    width: auto;
+    max-width: none;
+}
+
+.my-listing-actions form button {
+    width: auto;
+    margin-top: 0;
+    padding: 10px 22px;
+    font-size: 14px;
+}
+
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--text-muted);
+}
+
+.empty-state .empty-icon {
+    font-size: 52px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.empty-state h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    font-size: 30px;
 }

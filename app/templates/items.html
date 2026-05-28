@@ -19,6 +19,18 @@
             <p class="price">{{ item.price }} KGS</p>
         </a>
     </div>
+{% else %}
+    <div class="empty-state">
+        {% if request.args.get('search') %}
+            <div class="empty-icon">🔍</div>
+            <h3>No results for "{{ request.args.get('search') }}"</h3>
+            <p>Try a different keyword or <a href="{{ url_for('items') }}">browse all items</a>.</p>
+        {% else %}
+            <div class="empty-icon">📭</div>
+            <h3>No items yet</h3>
+            <p>Be the first to <a href="{{ url_for('add_item') }}">list something</a>.</p>
+        {% endif %}
+    </div>
 {% endfor %}
 </div>
 {% endblock %}

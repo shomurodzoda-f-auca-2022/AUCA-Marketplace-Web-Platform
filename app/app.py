@@ -215,6 +215,12 @@ def favourites():
     fav_ids = {item.id for item in fav_items}
     return render_template('favorites.html', items=fav_items, fav_ids=fav_ids)
 
+@app.route('/my_listings')
+@login_required
+def my_listings():
+    user_items = Item.query.filter_by(user_id=current_user.id).order_by(Item.id.desc()).all()
+    return render_template('my_listings.html', items=user_items)
+
 # Run
 if __name__ == '__main__':
     app.run(debug=True)
